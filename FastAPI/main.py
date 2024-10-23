@@ -2,4 +2,12 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-print("Hell")
+
+@app.get("/")
+async def root():
+    return {"message": "Hello FastAPI"}
+
+
+@app.get("/url")
+async def url():
+    return {"url": "https://mouredev.com/python"}

@@ -52,6 +52,20 @@ async def userpost(user: User):
         return {"error": "User already exist"}
     else:
         users_list.append(user)
+        return user
+
+
+@app.put("/user/")
+async def userput(user: User):
+    found = False
+    for index, saved_user in enumerate(users_list):
+        if saved_user.id == user.id:
+            users_list[index] = user
+            found = True
+    if not found:
+        return {"error": "User has not been updated"}
+    else:
+        return user
 
 
 def search_user(id: int):

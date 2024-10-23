@@ -68,6 +68,19 @@ async def userput(user: User):
         return user
 
 
+@app.delete("/user/{id}")
+async def userdelete(id: int):
+    found = False
+    for index, saved_user in enumerate(users_list):
+        if saved_user.id == id:
+            del users_list[index]
+            found = True
+    if not found:
+        return {"error": "User has not been deleted"}
+    else:
+        return user
+
+
 def search_user(id: int):
     users = filter(lambda user: user.id == id, users_list)
     try:

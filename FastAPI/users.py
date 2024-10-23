@@ -34,20 +34,24 @@ async def users():
     return users_list
 
 
-# http://127.0.0.1:8000/user/2
+# http://127.0.0.1:8000/user/2  PATH
 @app.get("/user/{id}")
 async def user(id: int):
-    users = filter(lambda user: user.id == id, users_list)
-    try:
-        return list(users)[0]
-    except:
-        return {"error": "User not found"}
+    return search_user(id)
 
 
-# http://127.0.0.1:8000/userquery/?id=2
+# http://127.0.0.1:8000/userquery/?id=2  QUERY
 @app.get("/userquery/")
 async def userquery(id: int):
     return search_user(id)
+
+
+@app.post("/user/")
+async def userpost(user: User):
+    if type(search_user(user.id)) == User:
+        return {"error": "User already exist"}
+    else:
+        users_list.append(user)
 
 
 def search_user(id: int):
